@@ -122,6 +122,9 @@ void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 		cur1->next = cur2;
 		cur2->next = temp1;
 
+		ll1->size++;
+		ll2->size--;
+
 		cur1 = temp1;
 		cur2 = ll2->head;
 	}
