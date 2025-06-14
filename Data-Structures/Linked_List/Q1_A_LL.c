@@ -71,7 +71,6 @@ int main()
 		case 3:
 			printf("The resulting sorted linked list is: ");
 			printList(&ll);
-			removeAllItems(&ll);
 			break;
 		case 0:
 			removeAllItems(&ll);
@@ -88,10 +87,71 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+/* add your code here */
 int insertSortedLL(LinkedList *ll, int item)
 {
-	/* add your code here */
+	ListNode *pre, *cur, *temp;
+	int index;
+
+	if (ll == NULL) // ll 자체가 유효하지 않은 경우
+		return -1;
+	
+	cur = ll->head; // 일단 cur를 head가 가리키는 원소 주소(ll의 첫번째 원소 주소)로 초기화
+	index = 0;
+
+	if (cur == NULL) { // 연결리스트가 비어있는 경우 (ll->head가 NULL인 경우),
+		cur = malloc(sizeof(ListNode)); // 새로운 원소를 생성하여 cur가 새로운 원소의 주소를 가리키도록 함
+		cur->item = item; // item 넣고
+		cur->next = NULL; // next는 NULL을 가리키면 되고
+		ll->head = cur; // head가 새 원소 주소 가리키도록 하고
+		ll->size++; // ll size 원소 하나만큼 늘려주고
+		return index; // index = 0 반환
+	}
+
+	while (cur != NULL) { // 정상적으로 cur이 어떠한 원소를 가리킬 경우, cur가 가리키는 원소가 현재 원소
+		if (cur->item == item) { // 만약 새로 들어올 item이 현재 원소의 값과 같다면
+			return -1; // 이미 ll에 있는 값을 추가할 수 없으므로 -1을 반환하고 함수 종료
+		}
+		else if (cur->item > item) { // 만약 새로 들어올 item이 현재 원소의 값보다 작다면, 현재 원소의 앞에다가 item을 추가해야 함
+
+			temp = cur; // 미리 현재 원소의 주소를 temp에 복사해 두고,
+			cur = malloc(sizeof(ListNode)); // 새로운 원소를 생성하여 cur가 새로운 원소의 주소를 가리키도록 함 (현재 원소 변경)
+			cur->item = item; // 새로운 원소에 item 값을 넣어 주고,
+			cur->next = temp; // 새로운 원소의 next를 이전 원소의 주소로 연결해줌
+
+			if (temp == ll->head) { // 만약 새로운 원소가 첫 번째 원소라면,
+				ll->head = cur; // head를 새로운 원소의 주소로 연결해줌
+			}
+			else { // 만약 새로운 원소가 첫 번째 원소가 아니라면,
+				pre->next = cur; // 이전 원소의 전에 있었던 원소(pre)의 next를 새로운 원소의 주소로 연결해줌
+			}
+			ll->size++; // ll의 size를 원소 하나만큼 증가시키고,
+			return index; // 인덱스를 반환하고 함수 종료 (새로운 원소가 왼쪽에 추가되었으므로 인덱스에는 변화가 없음)
+
+		}
+		else { // 만약 새로 들어올 item이 현재 원소의 값보다 크다면,
+			pre = cur; // 현재 원소의 주소를 이전 원소의 주소(pre)에 복사하고,
+			cur = cur->next; // cur는 이제 다음 원소의 주소를 가리킨다 (현재 원소 변경)
+			index++; // 그러면서 index가 1 증가한다
+		}
+	}
+
+	
+	// 연결리스트의 마지막에 도달한 경우, cur == NULL이 되어 while문 탈출
+	cur = malloc(sizeof(ListNode)); // 새로운 원소 추가 
+	cur->item = item; // 원소에 item 넣어주고
+	cur->next = NULL; // next는 NULL
+	pre->next = cur;
+	ll->size++; // ll 사이즈를 원소 하나만큼 늘리고
+	return index; // 인덱스 반환 후 함수 종료
+
 }
+
+
+
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 
