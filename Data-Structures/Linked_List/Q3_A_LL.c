@@ -86,7 +86,42 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	if (ll == NULL){
+		return;
+	}
+	ListNode *oddHead, *evenPre, *oddPre, *cur;
+	cur = ll->head;
+	oddHead = NULL;
+	evenPre = NULL;
+	oddPre = NULL;
+
+
+	if (cur == NULL){
+		return;
+	}
+
+	while (cur != NULL) {
+		if (cur->item%2 == 0) { // 현재 원소가 짝수라면
+			if (ll->head->item%2 == 1 || ll->head == cur) { // 첫번째 원소가 홀수이거나, 현재 원소와 같은 경우 -> 현재 원소가 첫번째로 등장한 짝수라는 의미
+				ll->head = cur; // 첫번째로 등장한 짝수를 첫 번째 원소로 변경
+			} else { // 첫번째 짝수가 아니라면
+				evenPre->next = cur; // 직전에 등장했던 짝수인 evenPre의 다음 원소를 현재 원소로 변경
+			}
+			evenPre = cur; // 이제 현재 원소를 evenPre로 바꿔줌
+		} else { // 현재 원소가 홀수라면
+			if (oddHead == NULL) { // 첫번째 홀수가 아직 등장하지 않았을 경우
+				oddHead = cur; // 현재 원소가 첫번째 홀수
+			} else { // 첫번째 홀수가 아니라면
+				oddPre->next = cur; // 직전에 등장했던 홀수인 oddPre의 다음 원소를 현재 원소로 변경
+			}
+			oddPre = cur; // 이제 현재 원소를 oddPre로 바꿔줌
+		}
+		cur = cur->next;
+	}
+	
+	if (evenPre != NULL) evenPre->next = oddHead;
+	if (oddPre != NULL) oddPre->next = NULL;
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
