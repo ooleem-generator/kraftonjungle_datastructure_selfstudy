@@ -85,9 +85,9 @@ int main()
 			break;
         case 2:
             if(balanced(str))
-                printf("not balanced!\n");
-            else
                 printf("balanced!\n");
+            else
+                printf("not balanced!\n");
 			break;
 		case 0:
 			break;
@@ -104,7 +104,33 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+	if (expression == ""){
+		return 0;
+	}
+
+	Stack s;
+	s.ll.head = NULL;
+	s.ll.size = 0;
+
+	for (int i = 0; i < sizeof(expression); i++) {
+		if (expression[i] == '(') push(&s, 0);
+		else if (expression[i] == '{') push(&s, 1);
+		else if (expression[i] == '[') push(&s, 2);
+		else if (expression[i] == ')' || expression[i] == ']' || expression[i] == '}'){
+			if (isEmptyStack(&s)) return 0;
+			switch (expression[i]){
+				case ')':
+					if (peek(&s) == 0) pop(&s); else return 0; break;
+				case '}':
+					if (peek(&s) == 1) pop(&s); else return 0; break;
+				case ']':
+					if (peek(&s) == 2) pop(&s); else return 0; break;
+			}
+		}		
+	}
+
+	if (isEmptyStack(&s)) return 1; else return 0;
+
 }
 
 ////////////////////////////////////////////////////////////

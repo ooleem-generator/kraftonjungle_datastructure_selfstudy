@@ -32,7 +32,7 @@ typedef struct _queue
 ///////////////////////// function prototypes ////////////////////////////////////
 
 // You should not change the prototypes of these functions
-void recursiveReverse(Queue *q);
+void recursiveReverseQueue(Queue *q);
 
 // You may use the following functions or you may write your own
 void enqueue(Queue *q, int item);
@@ -85,7 +85,7 @@ int main()
 			printList(&q.ll);
 			break;
 		case 2:
-			recursiveReverse(&q); // You need to code this function
+			recursiveReverseQueue(&q); // You need to code this function
 			printf("The resulting reversed queue is: ");
 			printList(&(q.ll));
 			removeAllItemsFromQueue(&q);
@@ -107,9 +107,23 @@ int main()
 
 ////////////////////////////////////////////////////////////
 
-void recursiveReverse(Queue *q)
+void recursiveReverseQueue(Queue *q)
 {
-/* add your code here */
+	if (q->ll.size <= 1) {
+		return;
+	}
+
+	int dequeueditem = dequeue(q);
+
+	if (q->ll.size == 1) {
+		enqueue(q, dequeueditem);
+		return;
+	}
+	recursiveReverseQueue(q);
+
+	enqueue(q, dequeueditem);
+	return;
+
 }
 
 //////////////////////////////////////////////////////////////////

@@ -92,8 +92,8 @@ void moveOddItemsToBack(LinkedList *ll)
 	ListNode *oddHead, *evenPre, *oddPre, *cur;
 	cur = ll->head;
 	oddHead = NULL;
-	evenPre = NULL;
-	oddPre = NULL;
+	// evenPre = NULL;
+	// oddPre = NULL;
 
 
 	if (cur == NULL){

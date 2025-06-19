@@ -90,7 +90,41 @@ int main()
 
 void inOrderTraversal(BSTNode *root)
 {
-	 /* add your code here */
+	if (root == NULL) return;
+
+	Stack s;
+	s.top = NULL;
+
+	BSTNode *cur, *poppednode;
+
+	push(&s, root);
+	cur = root;
+	
+	while (!isEmpty(&s)) {
+		if (cur == peek(&s)){ // 현재 cur가 가리키는 노드가 스택 맨 위 노드와 같다면, 새로 원소가 들어온 상황, 들어온 원소의 왼쪽에 원소가 있는지 확인
+			if (cur->left != NULL) {
+				push(&s, cur->left);
+				cur = cur->left;
+			}
+			else { // 없으면
+				poppednode = pop(&s);
+				printf("%d ", poppednode->item);
+				if (poppednode->right != NULL) {
+					push(&s, cur->right);
+					cur = cur->right;
+				}
+			}
+		} else {
+			poppednode = pop(&s);
+			printf("%d ", poppednode->item);
+			if (poppednode->right != NULL) {
+				push(&s, poppednode->right);
+				cur = poppednode->right;
+			}
+		}
+	}
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -38,7 +38,7 @@ typedef struct _queue{
 ///////////////////////// function prototypes ////////////////////////////////////
 
 // You should not change the prototypes of these functions
-void reverse(Queue *q);
+void reverseQueue(Queue *q);
 
 void push(Stack *s, int item);
 int pop(Stack *s);
@@ -91,7 +91,7 @@ int main()
 			printList(&(q.ll));
 			break;
 		case 2:
-			reverse(&q); // You need to code this function
+			reverseQueue(&q); // You need to code this function
 			printf("The resulting queue after reversing its elements is: ");
 			printList(&(q.ll));
 			removeAllItems(&(q.ll));
@@ -110,9 +110,24 @@ int main()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-void reverse(Queue *q)
+void reverseQueue(Queue *q)
 {
-/* add your code here */
+	if (q->ll.head == NULL) {
+		return;
+	}
+	
+	Stack s;
+	s.ll.head = NULL;
+	s.ll.size = 0;
+
+	while (q->ll.head != NULL) {
+		push(&s, dequeue(q));
+	}
+
+	while (s.ll.head != NULL) {
+		enqueue(q, pop(&s));
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

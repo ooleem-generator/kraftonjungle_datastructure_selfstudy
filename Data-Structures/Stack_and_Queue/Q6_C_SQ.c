@@ -33,7 +33,7 @@ typedef struct stack{
 ///////////////////////// function prototypes ////////////////////////////////////
 
 // You should not change the prototypes of these functions
-void removeUntil(Stack *s, int value);
+void removeUntilStack(Stack *s, int value);
 
 void push(Stack *s, int item);
 int pop(Stack *s);
@@ -66,7 +66,7 @@ int main()
 	s.ll.size = 0;
 
 	printf("1: Insert an integer into the stack:\n");
-	printf("3: Remove values until the given value;\n");
+	printf("2: Remove values until the given value;\n");
 	printf("0: Quit:\n");
 
 
@@ -87,7 +87,7 @@ int main()
 		case 2:
 		    printf("Enter an integer value in stack to remove values until that value: ");
 			scanf("%d", &i);
-			removeUntil(&s,i); // You need to code this function
+			removeUntilStack(&s,i); // You need to code this function
 			printf("The resulting stack after removing values until the given value: ");
 			printList(&(s.ll));
 			removeAllItemsFromStack(&s);
@@ -109,9 +109,16 @@ int main()
 
 ////////////////////////////////////////////////////////////
 
-void removeUntil(Stack *s, int value)
+void removeUntilStack(Stack *s, int value)
 {
-/* add your code here */
+
+	while (s->ll.head != NULL && s->ll.head->item != value){
+		if (s->ll.head->item != value) {
+			pop(s);
+		}
+	}
+	return;
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////
